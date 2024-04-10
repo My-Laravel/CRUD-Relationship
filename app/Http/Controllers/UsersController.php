@@ -51,13 +51,6 @@ class UsersController extends Controller
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
-     *         name="number",
-     *         in="query",
-     *         description="The number of the user",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
      *         name="password",
      *         in="query",
      *         description="The password of the user",
@@ -75,10 +68,7 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
-        $phoneData = [
-            'number' => $request->number,
-        ];
-        $this->users->createUser($data, $phoneData);
+        $this->users->createUser($data);
         return response()->json(['message' => 'User created successfully']);
     }
 
@@ -134,13 +124,6 @@ class UsersController extends Controller
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
-     *         name="number",
-     *         in="query",
-     *         description="The number of the user",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
      *         name="password",
      *         in="query",
      *         description="The password of the user",
@@ -158,11 +141,7 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
-
-        $phoneData = [
-            'number' => $request->number,
-        ];
-        $this->users->updateUser($data, $id, $phoneData);
+        $this->users->updateUser($data, $id);
         return response()->json(['message' => 'User updated successfully']);
     }
 

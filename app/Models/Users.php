@@ -14,52 +14,30 @@ class Users extends Model
 
     public function getAllUsers()
     {
-        return self::with('phone')->get();
+        return self::with('posts')->get();
     }
 
     public function getUserById($id)
     {
-        return self::with('phone')->find($id);
+        return self::with('posts')->find($id);
     }
 
-    public function createUser($data,$phoneData)
+    public function createUser($data)
     {
-        $user = self::create($data);
-        $this->addNewPhone($user->id, $phoneData);
+        self::create($data);
     }
 
-    public function updateUser($data, $id, $phoneData)
+    public function updateUser($data, $id)
     {
         self::find($id)->update($data);
-        $this->updatePhone($phoneData, $id);
     }
 
     public function deleteUser($id)
     {
-        $user = self::find($id);
-        $user->phone()->delete();
-        $user->delete();
+        self::find($id)->delete();
     }
 
-    public function addNewPhone($userId, $phoneData)
-    {
-        $user = self::find($userId);
-
-        if ($user) {
-            $phone = new Phone($phoneData);
-            $user->phone()->save($phone);
-        }
-    }
-
-    public function updatePhone($phoneData, $userId){
-        $user = self::find($userId);    
-        if ($user) {
-            $user->phone()->update($phoneData);
-        }
-    }
-
-    public function phone():HasOne
-    {
-        return $this->hasOne(Phone::class, 'user_id');
+    public function posts(){
+        return $this->hasMany(Post::class, 'user_id');
     }
 }
